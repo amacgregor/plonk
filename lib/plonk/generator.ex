@@ -18,7 +18,6 @@ defmodule Plonk.Generator do
   # Function to render the template with given data
   def render_template(template, data) when is_binary(template) and is_map(data) do
     bindings = map_to_bindings(data)
-    IO.inspect(bindings)
     EEx.eval_string(template, bindings)
   end
 
@@ -32,8 +31,6 @@ defmodule Plonk.Generator do
     # Specify the directory where files will be generated, e.g., "output"
     output_dir = "output"
     output_path = Path.join([output_dir, file_name])
-
-    IO.inspect(output_path)
 
     # Create the output directory if it does not exist
     File.mkdir_p(output_dir)

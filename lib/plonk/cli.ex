@@ -9,7 +9,7 @@ defmodule Plonk.CLI do
 
     confirm = Prompt.confirm("Do you want to create this file?")
 
-    if confirm do
+    if confirm === true do
       template_name = selected_generator[:template]
       {:ok, template} = Plonk.Generator.load_template(template_name)
 
@@ -26,14 +26,14 @@ defmodule Plonk.CLI do
   end
 
   defp collect_data(prompts) do
-    Enum.reduce(prompts, %{}, fn %{type: type, message: message, key: key}, acc ->
+    Enum.reduce(prompts, %{}, fn %{type: type, message: message, key: key, options: options}, acc ->
       value =
         case type do
           :text ->
-            Prompt.text(message)
+            Prompt.text(message, options)
 
           :boolean ->
-            Prompt.confirm(message, default_answer: :no)
+            Prompt.confirm(message, default_answer: :no, opts: options)
             # Add cases for other types of prompts if needed
         end
 
