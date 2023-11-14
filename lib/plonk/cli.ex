@@ -27,27 +27,37 @@ defmodule Plonk.CLI do
 
   defp collect_data(prompts) do
     Enum.reduce(prompts, %{}, fn %{type: type, message: message, key: key}, acc ->
-      value = case type do
-        :text -> Prompt.text(message)
-        :boolean -> Prompt.confirm(message, default_answer: :no)
-        # Add cases for other types of prompts if needed
-      end
+      value =
+        case type do
+          :text ->
+            Prompt.text(message)
+
+          :boolean ->
+            Prompt.confirm(message, default_answer: :no)
+            # Add cases for other types of prompts if needed
+        end
+
       Map.put(acc, key, value)
     end)
   end
 
   defp generate_file_name(title, extension \\ "md") do
-    current_date = DateTime.utc_now()
-                     |> DateTime.to_iso8601()
-                     |> String.split("T")
-                     |> List.first()
-                     |> String.replace("-", "")
+    current_date =
+      DateTime.utc_now()
+      |> DateTime.to_iso8601()
+      |> String.split("T")
+      |> List.first()
+      |> String.replace("-", "")
 
-    normalized_title = title
-                       |> String.downcase()
-                       |> String.replace(~r/[^\w\s]/, "") # Remove non-word characters
-                       |> String.replace(~r/\s+/, "_")    # Replace spaces with underscores
+    normalized_title =
+      title
+      |> String.downcase()
+      # Remove non-word characters
+      |> String.replace(~r/[^\w\s]/, "")
+      # Replace spaces with underscores
+      |> String.replace(~r/\s+/, "_")
 
-    "#{current_date}_#{normalized_title}.#{extension}"  # Append file extension, e.g., .txt
+    # Append file extension, e.g., .txt
+    "#{current_date}_#{normalized_title}.#{extension}"
   end
 end

@@ -12,8 +12,8 @@ defmodule Plonk.GeneratorConfig do
         ]
       },
       %{
-        name: "Markdown Article",
-        template: "markdown_article.eex",
+        name: "Blog Post (Markdown)",
+        template: "blog_post.eex",
         prompts: [
           %{type: :text, message: "Enter the title:", key: :title},
           %{type: :text, message: "Enter the category:", key: :category},
@@ -30,10 +30,8 @@ defmodule Plonk.GeneratorConfig do
           %{type: :text, message: "What did you learned? (240 chars):", key: :description},
           %{type: :text, message: "Enter tags (comma-separated):", key: :tags},
           %{type: :boolean, message: "Is it published?", key: :published}
-
         ]
       }
-
     ]
   end
 end
