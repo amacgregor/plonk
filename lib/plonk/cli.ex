@@ -7,9 +7,9 @@ defmodule Plonk.CLI do
     selected_generator = Enum.find(generators, fn g -> g[:name] == choice end)
     data = collect_data(selected_generator[:prompts])
 
-    confirm = Prompt.confirm("Do you want to create this file?")
+    confirm = Prompt.confirm("Do you want to create this file?", default_answer: :yes)
 
-    if confirm === true do
+    if confirm === :yes do
       template_name = selected_generator[:template]
       {:ok, template} = Plonk.Generator.load_template(template_name)
 
@@ -33,8 +33,13 @@ defmodule Plonk.CLI do
             Prompt.text(message, options)
 
           :boolean ->
-            Prompt.confirm(message, default_answer: :no, opts: options)
-            # Add cases for other types of prompts if needed
+            Prompt.confirm(message, options)
+
+          # :choice ->
+          #   Prompt.choice(message, choices, options)
+
+          # :select ->
+          #   Prompt.select(message, choices, options)
         end
 
       Map.put(acc, key, value)
