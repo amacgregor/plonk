@@ -24,3 +24,6 @@ plonk-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Ignore output directory 
+/output/
