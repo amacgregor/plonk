@@ -23,6 +23,17 @@ defmodule Plonk.GeneratorConfig do
             message: "Enter tags (comma-separated)",
             key: :tags,
             options: [color: :light_green]
+          },
+          %{
+            type: :select,
+            message: "Select a status",
+            key: :status,
+            options: [
+              choices: [
+                {"Draft", "draft"},
+                {"Published", "published"}
+              ]
+            ]
           }
         ]
       },

@@ -35,16 +35,32 @@ defmodule Plonk.CLI do
           :boolean ->
             Prompt.confirm(message, options)
 
-          # :choice ->
-          #   Prompt.choice(message, choices, options)
+          :choice ->
+            {choices, options_without_choices} = extract_choices(options)
 
-          # :select ->
-          #   Prompt.select(message, choices, options)
+            Prompt.choice(message, choices, options_without_choices)
+
+          :select ->
+            {choices, options_without_choices} = extract_choices(options)
+
+            Prompt.select(message, choices, options_without_choices)
         end
 
       Map.put(acc, key, value)
     end)
   end
+
+  # Function to extract choices
+  defp extract_choices(options) do
+    # Find the choices list
+    choices = Keyword.get(options, :choices, [])
+
+    # Create a version of options without the choices
+    options_without_choices = Keyword.drop(options, [:choices])
+
+    {choices, options_without_choices}
+  end
+
 
   defp generate_file_name(title, extension \\ "md") do
     current_date =
